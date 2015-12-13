@@ -1,22 +1,29 @@
 package be.sonck.itunes.api.model;
 
+import com.google.common.base.MoreObjects;
+
 public class Track extends Item {
 
 	private final String album;
 	private final String artist;
-	private final int trackNumber;
-	private final int discNumber;
+	private final Integer trackNumber;
+	private final Integer discNumber;
 
-	public Track(String persistentId, String name, String album, String artist, int trackNumber,
-			int discNumber) {
-		super(persistentId, name);
-		this.album = album;
-		this.artist = artist;
-		this.trackNumber = trackNumber;
-		this.discNumber = discNumber;
-	}
 
-	public String getAlbum() {
+    public Track(TrackBuilder builder) {
+        this((GenericTrackBuilder<?>) builder);
+    }
+
+    protected Track(GenericTrackBuilder<?> builder) {
+        super(builder);
+
+        this.album = builder.album;
+        this.artist = builder.artist;
+        this.trackNumber = builder.trackNumber;
+        this.discNumber = builder.discNumber;
+    }
+
+    public String getAlbum() {
 		return album;
 	}
 
@@ -24,11 +31,20 @@ public class Track extends Item {
 		return artist;
 	}
 
-	public int getTrackNumber() {
+	public Integer getTrackNumber() {
 		return trackNumber;
 	}
 
-	public int getDiscNumber() {
+	public Integer getDiscNumber() {
 		return discNumber;
 	}
+
+    @Override
+    protected MoreObjects.ToStringHelper getStringHelper() {
+        return super.getStringHelper()
+                .add("album", album)
+                .add("artist", artist)
+                .add("trackNumber", trackNumber)
+                .add("discNumber", discNumber);
+    }
 }

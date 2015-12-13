@@ -1,27 +1,30 @@
 package be.sonck.itunes.api.model;
 
+import com.google.common.base.MoreObjects;
+
 import java.io.File;
 
 public class FileTrack extends Track {
 
 	private final File location;
 
-	public FileTrack(String persistentId, String name, String album, String artist,
-			int trackNumber, int discNumber, File location) {
-		super(persistentId, name, album, artist, trackNumber, discNumber);
-		this.location = location;
+
+	public FileTrack(FileTrackBuilder builder) {
+		this((GenericFileTrackBuilder<?>) builder);
+	}
+
+	public FileTrack(GenericFileTrackBuilder<?> builder) {
+		super(builder);
+
+		this.location = builder.location;
 	}
 
 	public File getLocation() {
 		return location;
 	}
 
-	@Override
-	public String toString() {
-		return "FileTrack [location=" + location + ", getAlbum()=" + getAlbum() + ", getArtist()="
-				+ getArtist() + ", getTrackNumber()=" + getTrackNumber() + ", getDiscNumber()="
-				+ getDiscNumber() + ", getPersistentId()=" + getPersistentId() + ", getName()="
-				+ getName() + ", toString()=" + super.toString() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + "]";
-	}
+    @Override
+    protected MoreObjects.ToStringHelper getStringHelper() {
+        return super.getStringHelper().add("location", location);
+    }
 }

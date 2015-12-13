@@ -1,17 +1,28 @@
 package be.sonck.itunes.api.model;
 
+import com.google.common.base.MoreObjects;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class Item {
 
 	private final String persistentId;
 	private final String name;
 
 	
-	public Item(String persistentId, String name) {
-		this.persistentId = persistentId;
-		this.name = name;
-	}
+    public Item(ItemBuilder builder) {
+        this((GenericItemBuilder<?>) builder);
+    }
 
-	public String getPersistentId() {
+    protected Item(GenericItemBuilder<?> builder) {
+        checkNotNull(builder.persistentId);
+
+        this.persistentId = builder.persistentId;
+        this.name = builder.name;
+    }
+
+    public String getPersistentId() {
 		return persistentId;
 	}
 
@@ -21,6 +32,12 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return "Item [persistentId=" + persistentId + ", name=" + name + "]";
+        return getStringHelper().toString();
 	}
+
+    protected MoreObjects.ToStringHelper getStringHelper() {
+        return toStringHelper(this)
+                .add("persistentId", persistentId)
+                .add("name", name);
+    }
 }

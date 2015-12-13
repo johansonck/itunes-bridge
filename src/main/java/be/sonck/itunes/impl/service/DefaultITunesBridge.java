@@ -10,7 +10,6 @@ import be.sonck.itunes.impl.factory.PlaylistTOFactory;
 import be.sonck.itunes.impl.model.FileTrackTO;
 import be.sonck.itunes.impl.model.PlaylistTO;
 
-import java.io.File;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -22,21 +21,6 @@ public class DefaultITunesBridge implements ITunesBridge {
 	private FileTrackTOFactory fileTrackTOFactory = new FileTrackTOFactory();
 	private FileTrackFactory fileTrackFactory = new FileTrackFactory();
 
-	public static void main(String[] args) {
-		long start = System.currentTimeMillis();
-		Playlist playlist = new Playlist("2B7CF7220C2C05F2", "blah");
-		SortedSet<FileTrack> tracks = new DefaultITunesBridge().getTracks(playlist);
-
-		System.out.println(System.currentTimeMillis() - start);
-		
-		for (FileTrack track : tracks) {
-			System.out.println(track);
-			File location = track.getLocation();
-			if (!location.exists()) {
-				throw new IllegalStateException(location.getAbsolutePath());
-			}
-		}
-	}
 
 	@Override
 	public SortedSet<Playlist> getAllPlaylists() {

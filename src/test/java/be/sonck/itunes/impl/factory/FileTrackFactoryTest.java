@@ -1,15 +1,14 @@
 package be.sonck.itunes.impl.factory;
 
+import be.sonck.itunes.api.model.FileTrack;
+import be.sonck.itunes.impl.model.FileTrackTO;
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
-
-import org.junit.Assert;
-import org.junit.Test;
-
-import be.sonck.itunes.api.model.FileTrack;
-import be.sonck.itunes.impl.model.FileTrackTO;
 
 public class FileTrackFactoryTest {
 
@@ -25,8 +24,8 @@ public class FileTrackFactoryTest {
 		Assert.assertEquals("B411CFB0AB9DC862", fileTrack.getPersistentId());
 		Assert.assertEquals("The Back Room", fileTrack.getAlbum());
 		Assert.assertEquals("Editors", fileTrack.getArtist());
-		Assert.assertEquals(0, fileTrack.getDiscNumber());
-		Assert.assertEquals(1, fileTrack.getTrackNumber());
+		Assert.assertEquals(Integer.valueOf(0), fileTrack.getDiscNumber());
+		Assert.assertEquals(Integer.valueOf(1), fileTrack.getTrackNumber());
 		Assert.assertEquals("Lights", fileTrack.getName());
 		Assert.assertEquals(
 				"/Volumes/Macintosh HD 2/iTunes/iTunes Music/Music/Editors/The Back Room/01 Lights.mp3",

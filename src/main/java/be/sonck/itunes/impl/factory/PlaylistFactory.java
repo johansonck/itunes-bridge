@@ -1,18 +1,13 @@
 package be.sonck.itunes.impl.factory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import org.apache.commons.lang3.StringUtils;
-
-import be.sonck.itunes.api.model.FolderPlaylist;
+import be.sonck.itunes.api.model.FolderPlaylistBuilder;
 import be.sonck.itunes.api.model.Playlist;
+import be.sonck.itunes.api.model.PlaylistBuilder;
 import be.sonck.itunes.api.model.PlaylistComparator;
 import be.sonck.itunes.impl.model.PlaylistTO;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.*;
 
 public class PlaylistFactory {
 	
@@ -40,11 +35,18 @@ public class PlaylistFactory {
 		String type = to.getType();
 		
 		if (FOLDER.equals(type)) {
-			return new FolderPlaylist(to.getId(), to.getName(), getChildren(to.getId(), toMap));
-			
+			return new FolderPlaylistBuilder()
+                    .persistentId(to.getId())
+                    .name(to.getName())
+                    .children(getChildren(to.getId(), toMap))
+                    .build();
+
 		} else if (NONE.equals(type)) {
-			return new Playlist(to.getId(), to.getName());
-			
+            return new PlaylistBuilder()
+                    .persistentId(to.getId())
+                    .name(to.getName())
+                    .build();
+
 		} else {
 			return null;
 		}

@@ -2,12 +2,11 @@ package be.sonck.itunes.api.model;
 
 public class Playlist extends Item {
 
-	public Playlist(String persistentId, String name) {
-		super(persistentId, name);
+	public Playlist(PlaylistBuilder playlistBuilder) {
+		super(playlistBuilder);
 	}
 
-	@Override
-	public String toString() {
-		return "Playlist [persistentId=" + getPersistentId() + ", name=" + getName() + "]";
-	}
+    protected Playlist(GenericItemBuilder<?> builder) {
+        super(builder);
+    }
 }
