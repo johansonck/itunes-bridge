@@ -1,11 +1,5 @@
 package be.sonck.itunes.impl.service;
 
-import java.io.File;
-import java.util.List;
-import java.util.SortedSet;
-
-import be.sonck.applescript.AppleScriptException;
-import be.sonck.applescript.AppleScriptExecutor;
 import be.sonck.itunes.api.model.FileTrack;
 import be.sonck.itunes.api.model.Playlist;
 import be.sonck.itunes.api.service.ITunesBridge;
@@ -16,10 +10,13 @@ import be.sonck.itunes.impl.factory.PlaylistTOFactory;
 import be.sonck.itunes.impl.model.FileTrackTO;
 import be.sonck.itunes.impl.model.PlaylistTO;
 
+import java.io.File;
+import java.util.List;
+import java.util.SortedSet;
+
 public class DefaultITunesBridge implements ITunesBridge {
 
-	private ScriptCopier scriptCopier = new ScriptCopier();
-	private AppleScriptExecutor executor = new AppleScriptExecutor();
+	private AppleScriptExecutorClasspathAdapter executor = new AppleScriptExecutorClasspathAdapter();
 	private PlaylistTOFactory playlistTOFactory = new PlaylistTOFactory();
 	private PlaylistFactory playlistFactory = new PlaylistFactory();
 	private FileTrackTOFactory fileTrackTOFactory = new FileTrackTOFactory();
@@ -43,7 +40,7 @@ public class DefaultITunesBridge implements ITunesBridge {
 
 	@Override
 	public SortedSet<Playlist> getAllPlaylists() {
-		String result = executeScript(Scripts.GET_ALL_PLAYLISTS);
+		String result = executor.execute(Scripts.GET_ALL_PLAYLISTS);
 		List<PlaylistTO> toList = playlistTOFactory.createList(result);
 
 		return playlistFactory.createPlaylists(toList);
@@ -51,7 +48,7 @@ public class DefaultITunesBridge implements ITunesBridge {
 
 	@Override
 	public SortedSet<FileTrack> getTracks(Playlist playlist) {
-		String result = executeScript(Scripts.GET_TRACKS, playlist.getPersistentId());
+		String result = executor.execute(Scripts.GET_TRACKS, playlist.getPersistentId());
 		List<FileTrackTO> toList = fileTrackTOFactory.createFromTrackInfos(result);
 
 		return fileTrackFactory.createFileTracks(toList);
@@ -59,16 +56,7 @@ public class DefaultITunesBridge implements ITunesBridge {
 
 	@Override
 	public int countTracks(Playlist playlist) {
-		String result = executeScript(Scripts.COUNT_TRACKS, playlist.getPersistentId());
+		String result = executor.execute(Scripts.COUNT_TRACKS, playlist.getPersistentId());
 		return Integer.parseInt(result);
-	}
-
-	private String executeScript(String scriptName, String... args) {
-		try {
-			return executor.execute(scriptCopier.copyScript(scriptName), args).trim();
-
-		} catch (AppleScriptException e) {
-			throw new RuntimeException(e);
-		}
 	}
 }
