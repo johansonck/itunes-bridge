@@ -1,11 +1,11 @@
 package be.sonck.itunes.impl.factory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import be.sonck.itunes.impl.model.PlaylistTO;
 import be.sonck.itunes.interpreter.ListInterpreter;
 import be.sonck.itunes.interpreter.StringListInterpreter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class PlaylistTOFactory {
 	
@@ -14,13 +14,17 @@ public final class PlaylistTOFactory {
 	
 	
 	public List<PlaylistTO> createList(String libraryInfo) {
-		List<PlaylistTO> list = new ArrayList<PlaylistTO>();
-	
 		List<String> libraryInfos = listInterpreter.interpret(libraryInfo);
+		return createList(libraryInfos);
+	}
+
+	public List<PlaylistTO> createList(List<String> libraryInfos) {
+		List<PlaylistTO> list = new ArrayList<PlaylistTO>();
+
 		for (String entry : libraryInfos) {
 			list.add(create(stringListInterpreter.interpret(entry)));
 		}
-		
+
 		return list;
 	}
 

@@ -19,7 +19,7 @@ public class Item {
         checkNotNull(builder.persistentId);
 
         this.persistentId = builder.persistentId;
-        this.name = builder.name;
+        this.name = builder.name == null ? "" : builder.name;
     }
 
     public String getPersistentId() {

@@ -12,6 +12,8 @@ public class StringListInterpreter implements Interpreter<List<String>> {
 
 	@Override
 	public List<String> interpret(String string) {
-		return Arrays.asList(stringInterpreter.interpret(string).split(SEPARATOR, -1));
+		String interpretedString = stringInterpreter.interpret(string);
+		String[] splitString = interpretedString.split(SEPARATOR, -1);
+		return Arrays.asList(splitString);
 	}
 }

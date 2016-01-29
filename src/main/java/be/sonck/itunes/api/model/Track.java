@@ -17,10 +17,10 @@ public class Track extends Item {
     protected Track(GenericTrackBuilder<?> builder) {
         super(builder);
 
-        this.album = builder.album;
-        this.artist = builder.artist;
-        this.trackNumber = builder.trackNumber;
-        this.discNumber = builder.discNumber;
+        this.album = builder.album == null ? "" : builder.album;
+        this.artist = builder.artist == null ? "" : builder.artist;
+        this.trackNumber = builder.trackNumber == null ? 0 : builder.trackNumber;
+        this.discNumber = builder.discNumber == null ? 0 : builder.discNumber;
     }
 
     public String getAlbum() {
