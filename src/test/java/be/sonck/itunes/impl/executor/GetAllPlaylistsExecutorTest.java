@@ -1,4 +1,4 @@
-package be.sonck.itunes.impl.service;
+package be.sonck.itunes.impl.executor;
 
 import be.sonck.itunes.BasicSpringTest;
 import be.sonck.itunes.api.model.FolderPlaylist;

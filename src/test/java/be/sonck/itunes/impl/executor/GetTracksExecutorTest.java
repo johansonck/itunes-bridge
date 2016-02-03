@@ -1,10 +1,9 @@
-package be.sonck.itunes.impl.service;
+package be.sonck.itunes.impl.executor;
 
 import be.sonck.itunes.BasicSpringTest;
 import be.sonck.itunes.api.model.FileTrack;
 import be.sonck.itunes.api.model.Playlist;
 import be.sonck.itunes.api.model.PlaylistBuilder;
-import be.sonck.itunes.impl.executor.GetTracksExecutor;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
