@@ -30,5 +30,8 @@ public class SetRatingExecutorTest extends BasicSpringTest {
         track = getTrackExecutor.getTrack("When Doves Cry", "Purple Rain", "Prince & The Revolution");
 
         assertThat(track.getRating()).isEqualTo(newRating);
+
+        // don't mess up my library, reset the data after the test
+        setRatingExecutor.setRating(track.getPersistentId(), initialRating);
     }
 }

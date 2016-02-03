@@ -23,6 +23,7 @@ public class ClasspathAppleScriptExecutorTest extends BasicSpringTest {
     @Test
     public void test() {
         List<Object> result = (List<Object>) executor.execute(Scripts.GET_TRACK, "When Doves Cry", "Purple Rain", "Prince & The Revolution");
+//        List<Object> result = (List<Object>) executor.execute(Scripts.GET_TRACK, "Feline", "Rehearsal Summer 1984", "Prince & The Revolution");
         Iterator<Object> iterator = result.iterator();
 
         assertTrue(iterator.hasNext());
@@ -39,6 +40,10 @@ public class ClasspathAppleScriptExecutorTest extends BasicSpringTest {
         assertThat(iterator.next()).isEqualTo(Long.valueOf(0));
         assertTrue(iterator.hasNext());
         assertThat(iterator.next()).isEqualTo(Long.valueOf(100));
+        assertTrue(iterator.hasNext());
+        assertThat(iterator.next()).isEqualTo(Long.valueOf(80));
+        assertTrue(iterator.hasNext());
+        assertThat(iterator.next()).isEqualTo("computed");
         assertTrue(iterator.hasNext());
         assertThat(iterator.next()).isEqualTo("Macintosh HD 2:iTunes:iTunes Music:Music:Prince:Purple Rain:06 When Doves Cry.mp3");
         assertFalse(iterator.hasNext());

@@ -35,11 +35,15 @@ public class FileTrackTOFactory {
         List<Long> trackNumbers = (List<Long>) trackInfoList.get(i++);
         List<Long> discNumbers = (List<Long>) trackInfoList.get(i++);
         List<Long> ratings = (List<Long>) trackInfoList.get(i++);
+        List<Long> albumRatings = (List<Long>) trackInfoList.get(i++);
+        List<String> albumRatingKinds = stringToList(trackInfoList.get(i++));
+        List<String> locations = stringToList(trackInfoList.get(i++));
 
-        String locationsString = (String) trackInfoList.get(i++);
-        List<String> locations = forcedListInterpreter.interpret(locationsString);
+        return create(ids, names, albums, artists, trackNumbers, discNumbers, ratings, albumRatings, albumRatingKinds, locations);
+    }
 
-        return create(ids, names, albums, artists, trackNumbers, discNumbers, ratings, locations);
+    private List<String> stringToList(Object stringValue) {
+        return forcedListInterpreter.interpret((String) stringValue);
     }
 
     public FileTrackTO createFromSingleTrackInfo(List<Object> trackInfoList) {
@@ -52,13 +56,17 @@ public class FileTrackTOFactory {
         String trackNumber = toString((Long) iterator.next());
         String discNumber = toString((Long) iterator.next());
         String rating = toString((Long) iterator.next());
+        String albumRating = toString((Long) iterator.next());
+        String albumRatingKind = (String) iterator.next();
         String location = (String) iterator.next();
 
-        return new FileTrackTO(persistentId, name, album, artist, trackNumber, discNumber, rating, location);
+        return new FileTrackTO(persistentId, name, album, artist, trackNumber, discNumber, rating, albumRating,
+                albumRatingKind, location);
     }
 
     private List<FileTrackTO> create(List<String> ids, List<String> names, List<String> albums, List<String> artists,
-            List<Long> trackNumbers, List<Long> discNumbers, List<Long> ratings, List<String> locations) {
+            List<Long> trackNumbers, List<Long> discNumbers, List<Long> ratings, List<Long> albumRatings,
+            List<String> albumRatingKinds, List<String> locations) {
 
         List<FileTrackTO> list = new ArrayList<FileTrackTO>();
 
@@ -70,6 +78,8 @@ public class FileTrackTOFactory {
                     toString(trackNumbers.get(j)),
                     toString(discNumbers.get(j)),
                     toString(ratings.get(j)),
+                    toString(albumRatings.get(j)),
+                    stringInterpreter.interpret(albumRatingKinds.get(j)),
                     locations.get(j)));
         }
 

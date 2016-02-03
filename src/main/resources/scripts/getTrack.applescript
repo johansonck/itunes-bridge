@@ -15,6 +15,8 @@ on run argv
 			set end of allInfo to get track number
 			set end of allInfo to get disc number
 			set end of allInfo to get rating
+			set end of allInfo to get album rating
+			set end of allInfo to get album rating kind as text
 			set end of allInfo to get location as text
 		end tell
 

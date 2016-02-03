@@ -28,6 +28,8 @@ public class FileTrackTOFactoryTest extends BasicSpringTest {
         trackInfoList.add(asList(Long.valueOf(1), Long.valueOf(2))); // track number
         trackInfoList.add(asList(Long.valueOf(3), Long.valueOf(4))); // disc number
         trackInfoList.add(asList(Long.valueOf(0), Long.valueOf(20))); // ratings
+        trackInfoList.add(asList(Long.valueOf(40), Long.valueOf(60))); // album ratings
+        trackInfoList.add("user|computed");
         trackInfoList.add("Macintosh HD 2:iTunes:iTunes Music:Music:Chick Corea:Akoustic Band:01 Bessie's Blues.mp3" +
                 "|Macintosh HD 2:iTunes:iTunes Music:Music:Chick Corea:Akoustic Band:02 My One and Only Love.mp3");
 
@@ -35,10 +37,12 @@ public class FileTrackTOFactoryTest extends BasicSpringTest {
 
         validate(findTrack(fileTrackTOs, "566EB371EEFB58A8"),
                 new FileTrackTO("566EB371EEFB58A8", "Bessie's Blues", "Akoustic Band1", "Chick Corea1", "1", "3", "0",
+                        "40", "user",
                         "Macintosh HD 2:iTunes:iTunes Music:Music:Chick Corea:Akoustic Band:01 Bessie's Blues.mp3"));
 
         validate(findTrack(fileTrackTOs, "566EB371EEFB58A9"),
-                new FileTrackTO("566EB371EEFB58A9", "My One and Only Love", "Akoustic Band2", "Chick Corea2", "2", "4", "20",
+                new FileTrackTO("566EB371EEFB58A9", "My One and Only Love", "Akoustic Band2", "Chick Corea2", "2", "4",
+                        "20", "60", "computed",
                         "Macintosh HD 2:iTunes:iTunes Music:Music:Chick Corea:Akoustic Band:02 My One and Only Love.mp3"));
     }
 
@@ -47,11 +51,13 @@ public class FileTrackTOFactoryTest extends BasicSpringTest {
     }
 
     private FileTrackTO findTrack(List<FileTrackTO> list, String id) {
-		for (FileTrackTO track : list) {
-			if (id.equals(track.getPersistentId())) { return track; }
-		}
-		
-		Assert.fail("no track found with id '" + id + "'");
-		return null;
-	}
+        for (FileTrackTO track : list) {
+            if (id.equals(track.getPersistentId())) {
+                return track;
+            }
+        }
+
+        Assert.fail("no track found with id '" + id + "'");
+        return null;
+    }
 }

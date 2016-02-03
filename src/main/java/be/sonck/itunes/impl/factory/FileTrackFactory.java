@@ -3,6 +3,7 @@ package be.sonck.itunes.impl.factory;
 import be.sonck.itunes.api.model.FileTrack;
 import be.sonck.itunes.api.model.FileTrackBuilder;
 import be.sonck.itunes.api.model.FileTrackComparator;
+import be.sonck.itunes.api.model.RatingKind;
 import be.sonck.itunes.impl.model.FileTrackTO;
 import be.sonck.itunes.interpreter.LocationInterpreter;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,8 @@ public class FileTrackFactory {
                 .trackNumber(toInt(to.getTrackNumber()))
                 .discNumber(toInt(to.getDiscNumber()))
                 .rating(toInt(to.getRating()))
+                .albumRating(toInt(to.getAlbumRating()))
+                .albumRatingKind(RatingKind.fromValue(to.getAlbumRatingKind()))
                 .location(toFile(to.getLocation()))
                 .build();
 	}

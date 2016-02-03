@@ -9,6 +9,8 @@ public class Track extends Item {
 	private final Integer trackNumber;
 	private final Integer discNumber;
     private final Integer rating;
+    private final Integer albumRating;
+    private final RatingKind albumRatingKind;
 
 
     public Track(TrackBuilder builder) {
@@ -23,6 +25,8 @@ public class Track extends Item {
         this.trackNumber = builder.trackNumber == null ? 0 : builder.trackNumber;
         this.discNumber = builder.discNumber == null ? 0 : builder.discNumber;
         this.rating = builder.rating == null ? 0 : builder.rating;
+        this.albumRating = builder.albumRating == null ? 0 : builder.albumRating;
+        this.albumRatingKind = builder.albumRatingKind == null ? RatingKind.USER : builder.albumRatingKind;
     }
 
     public String getAlbum() {
@@ -43,6 +47,14 @@ public class Track extends Item {
 
     public Integer getRating() {
         return rating;
+    }
+
+    public Integer getAlbumRating() {
+        return albumRating;
+    }
+
+    public RatingKind getAlbumRatingKind() {
+        return albumRatingKind;
     }
 
     @Override
