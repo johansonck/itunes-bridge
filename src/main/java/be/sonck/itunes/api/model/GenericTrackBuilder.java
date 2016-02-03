@@ -9,6 +9,7 @@ class GenericTrackBuilder<B extends GenericTrackBuilder<B>> extends GenericItemB
     String artist;
     Integer trackNumber;
     Integer discNumber;
+    Integer rating;
 
     public B album(String album) {
         this.album = album;
@@ -27,6 +28,11 @@ class GenericTrackBuilder<B extends GenericTrackBuilder<B>> extends GenericItemB
 
     public B discNumber(Integer discNumber) {
         this.discNumber = discNumber;
+        return (B) this;
+    }
+
+    public B rating(Integer rating) {
+        this.rating = rating;
         return (B) this;
     }
 }

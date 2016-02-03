@@ -1,8 +1,11 @@
 package be.sonck.itunes.interpreter;
 
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ListInterpreter implements Interpreter<List<String>>{
 	
 	private static final String SEPARATOR = ", ";

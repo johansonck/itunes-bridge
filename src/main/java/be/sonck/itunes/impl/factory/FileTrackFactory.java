@@ -5,12 +5,14 @@ import be.sonck.itunes.api.model.FileTrackBuilder;
 import be.sonck.itunes.api.model.FileTrackComparator;
 import be.sonck.itunes.impl.model.FileTrackTO;
 import be.sonck.itunes.interpreter.LocationInterpreter;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+@Service
 public class FileTrackFactory {
 
 	private LocationInterpreter locationInterpreter = new LocationInterpreter();
@@ -23,6 +25,7 @@ public class FileTrackFactory {
                 .artist(to.getArtist())
                 .trackNumber(toInt(to.getTrackNumber()))
                 .discNumber(toInt(to.getDiscNumber()))
+                .rating(toInt(to.getRating()))
                 .location(toFile(to.getLocation()))
                 .build();
 	}

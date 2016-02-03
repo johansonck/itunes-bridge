@@ -1,30 +1,46 @@
 package be.sonck.itunes.impl.service;
 
+import be.sonck.itunes.BasicSpringTest;
+import be.sonck.itunes.impl.executor.ClasspathAppleScriptExecutor;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import java.util.Iterator;
+import java.util.List;
+
+import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by johansonck on 27/12/15.
  */
-public class ClasspathAppleScriptExecutorTest {
+public class ClasspathAppleScriptExecutorTest extends BasicSpringTest {
+
+    @Autowired
+    private ClasspathAppleScriptExecutor executor;
 
     @Test
     public void test() {
-        Object result = executor().execute("getTrackInfo.applescript", "When Doves Cry", "Purple Rain", "Prince & The Revolution");
-        System.out.println(result);
+        List<Object> result = (List<Object>) executor.execute("getTrackInfo.applescript", "When Doves Cry", "Purple Rain", "Prince & The Revolution");
+        Iterator<Object> iterator = result.iterator();
 
-        assertThat(result, is("{\"566EB371EEFB5DA7\", \"When Doves Cry\", \"Purple Rain\", \"Prince & The Revolution\", 6, 0, 100}"));
-    }
-
-    @Test
-    public void getAllPlaylists() {
-        Object result = executor().execute(Scripts.GET_ALL_PLAYLISTS);
-        System.out.println(result);
-    }
-
-    private ClasspathAppleScriptExecutor executor() {
-        return new ClasspathAppleScriptExecutor();
+        assertTrue(iterator.hasNext());
+        assertThat(iterator.next()).isEqualTo("566EB371EEFB5DA7");
+        assertTrue(iterator.hasNext());
+        assertThat(iterator.next()).isEqualTo("When Doves Cry");
+        assertTrue(iterator.hasNext());
+        assertThat(iterator.next()).isEqualTo("Purple Rain");
+        assertTrue(iterator.hasNext());
+        assertThat(iterator.next()).isEqualTo("Prince & The Revolution");
+        assertTrue(iterator.hasNext());
+        assertThat(iterator.next()).isEqualTo(Long.valueOf(6));
+        assertTrue(iterator.hasNext());
+        assertThat(iterator.next()).isEqualTo(Long.valueOf(0));
+        assertTrue(iterator.hasNext());
+        assertThat(iterator.next()).isEqualTo(Long.valueOf(100));
+        assertTrue(iterator.hasNext());
+        assertThat(iterator.next()).isEqualTo("Macintosh HD 2:iTunes:iTunes Music:Music:Prince:Purple Rain:06 When Doves Cry.mp3");
+        assertFalse(iterator.hasNext());
     }
 }

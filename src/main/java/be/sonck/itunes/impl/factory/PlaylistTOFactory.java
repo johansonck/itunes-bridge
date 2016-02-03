@@ -3,14 +3,20 @@ package be.sonck.itunes.impl.factory;
 import be.sonck.itunes.impl.model.PlaylistTO;
 import be.sonck.itunes.interpreter.ListInterpreter;
 import be.sonck.itunes.interpreter.StringListInterpreter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public final class PlaylistTOFactory {
 	
-	private ListInterpreter listInterpreter = new ListInterpreter();
-	private StringListInterpreter stringListInterpreter = new StringListInterpreter();
+    @Autowired
+	private ListInterpreter listInterpreter;
+
+    @Autowired
+	private StringListInterpreter stringListInterpreter;
 	
 	
 	public List<PlaylistTO> createList(String libraryInfo) {

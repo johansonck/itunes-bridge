@@ -15,8 +15,7 @@ public class FileTrackFactoryTest {
 	@Test
 	public void test() {
 		FileTrackTO to = new FileTrackTO("B411CFB0AB9DC862", "Lights", "The Back Room", "Editors",
-				"1", "0",
-				"Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3");
+				"1", "0", "80", "Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3");
 
 		FileTrack fileTrack = new FileTrackFactory().create(to);
 
@@ -26,6 +25,7 @@ public class FileTrackFactoryTest {
 		Assert.assertEquals("Editors", fileTrack.getArtist());
 		Assert.assertEquals(Integer.valueOf(0), fileTrack.getDiscNumber());
 		Assert.assertEquals(Integer.valueOf(1), fileTrack.getTrackNumber());
+		Assert.assertEquals(Integer.valueOf(80), fileTrack.getRating());
 		Assert.assertEquals("Lights", fileTrack.getName());
 		Assert.assertEquals(
 				"/Volumes/Macintosh HD 2/iTunes/iTunes Music/Music/Editors/The Back Room/01 Lights.mp3",
@@ -38,13 +38,13 @@ public class FileTrackFactoryTest {
 		List<FileTrackTO> toList = new ArrayList<FileTrackTO>();
 
 		toList.add(new FileTrackTO("1", "Track 4", "The Back Room", "Editors", "4",
-				"0", "Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3"));
+				"0", "60", "Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3"));
 		toList.add(new FileTrackTO("2", "Track 3", "The Back Room", "Editors", "3",
-				"0", "Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3"));
+				"0", "20", "Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3"));
 		toList.add(new FileTrackTO("3", "Track 2", "The Back Room", "Editors", "2",
-				"0", "Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3"));
+				"0", "40", "Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3"));
 		toList.add(new FileTrackTO("4", "Track 1", "The Back Room", "Editors", "1",
-				"0", "Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3"));
+				"0", "80", "Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3"));
 
 		SortedSet<FileTrack> fileTracks = new FileTrackFactory().createFileTracks(toList);
 

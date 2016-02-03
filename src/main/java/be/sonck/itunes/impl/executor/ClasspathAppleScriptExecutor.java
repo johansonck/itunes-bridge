@@ -1,22 +1,28 @@
-package be.sonck.itunes.impl.service;
+package be.sonck.itunes.impl.executor;
 
+import be.sonck.itunes.impl.service.AppleScriptParser;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 /**
  * Created by johansonck on 06/12/15.
  */
+@Service
 public class ClasspathAppleScriptExecutor {
 
     private static final String SCRIPT_ENGINE = "AppleScriptEngine";
-    private AppleScriptParser appleScriptParser = new AppleScriptParser();
+
+    @Autowired
+    private AppleScriptParser appleScriptParser;
+
+    private ScriptEngine scriptEngine;
 
 
     public Object execute(String scriptName, String... args) {
@@ -35,29 +41,34 @@ public class ClasspathAppleScriptExecutor {
     }
 
     private ScriptEngine getScriptEngine() {
-        ScriptEngineManager manager = new ScriptEngineManager();
-        List<ScriptEngineFactory> factories = manager.getEngineFactories();
-        for (ScriptEngineFactory factory : factories) {
-            if (factory.getEngineName().indexOf(SCRIPT_ENGINE) != -1) {
-                return factory.getScriptEngine();
-            }
+        if (scriptEngine == null) {
+            scriptEngine = findScriptEngine();
         }
 
-        throw new IllegalStateException("script engine \"" + SCRIPT_ENGINE + "\" not found");
+        return scriptEngine;
+    }
+
+    private ScriptEngine findScriptEngine() {
+        ScriptEngine engine = new ScriptEngineManager().getEngineByName(SCRIPT_ENGINE);
+        if (engine == null) {
+            throw new IllegalStateException("script engine '" + SCRIPT_ENGINE + "' not found");
+        }
+
+        return engine;
     }
 
     private String getScriptContents(String scriptName) {
         try {
-            return IOUtils.toString(getResourceAsStream(scriptName));
+            return IOUtils.toString(getResourceAsStream("/scripts/" + scriptName));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     private InputStream getResourceAsStream(String scriptName) {
-        InputStream inputStream = getClass().getResourceAsStream("/scripts/" + scriptName);
+        InputStream inputStream = getClass().getResourceAsStream(scriptName);
         if (inputStream == null) {
-            throw new IllegalArgumentException("resource '/scripts/" + scriptName + "' could not be found");
+            throw new IllegalArgumentException("resource '" + scriptName + "' not found");
         }
         return inputStream;
     }

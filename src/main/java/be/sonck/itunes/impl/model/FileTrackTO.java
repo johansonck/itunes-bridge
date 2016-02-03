@@ -9,16 +9,18 @@ public class FileTrackTO {
 	private final String artist;
 	private final String trackNumber;
 	private final String discNumber;
+	private final String rating;
 	private final String location;
 
 	public FileTrackTO(String persistentId, String name, String album, String artist,
-			String trackNumber, String discNumber, String location) {
+			String trackNumber, String discNumber, String rating, String location) {
 		this.persistentId = persistentId;
 		this.name = name;
 		this.album = album;
 		this.artist = artist;
 		this.trackNumber = trackNumber;
 		this.discNumber = discNumber;
+		this.rating = rating;
 		this.location = location;
 	}
 
@@ -48,5 +50,9 @@ public class FileTrackTO {
 
 	public String getLocation() {
 		return location;
+	}
+
+	public String getRating() {
+		return rating;
 	}
 }

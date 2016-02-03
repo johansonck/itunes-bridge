@@ -1,16 +1,21 @@
 package be.sonck.itunes.interpreter;
 
-import java.util.List;
-
+import be.sonck.itunes.BasicSpringTest;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class StringListInterpreterTest {
+import java.util.List;
+
+public class StringListInterpreterTest extends BasicSpringTest {
+
+	@Autowired
+    private StringListInterpreter interpreter;
 
 	@Test
 	public void test() {
 		String value = "\"2B205008870E001D	91 - All Hope Is Gone	none	88B8104E2454F85F\"";
-		List<String> list = new StringListInterpreter().interpret(value);
+		List<String> list = interpreter.interpret(value);
 		
 		Assert.assertNotNull(list);
 		Assert.assertEquals(4, list.size());
@@ -24,7 +29,7 @@ public class StringListInterpreterTest {
 	@Test
 	public void testEmptyValue() {
 		String value = "\"2B205008870E001D	91 - All Hope Is Gone	none	\"";
-		List<String> list = new StringListInterpreter().interpret(value);
+		List<String> list = interpreter.interpret(value);
 		
 		Assert.assertNotNull(list);
 		Assert.assertEquals(4, list.size());

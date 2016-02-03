@@ -1,38 +1,52 @@
 package be.sonck.itunes.impl.factory;
 
-import java.util.List;
-
+import be.sonck.itunes.BasicSpringTest;
+import be.sonck.itunes.impl.model.FileTrackTO;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.unitils.reflectionassert.ReflectionAssert;
 
-import be.sonck.itunes.impl.model.FileTrackTO;
+import java.util.ArrayList;
+import java.util.List;
 
-public class FileTrackTOFactoryTest {
+import static java.util.Arrays.asList;
 
-	@Test
-	public void test() {
-		String input = "{\"B411CFB0AB9DC862	Lights	The Back Room	Editors	1	0	Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3\", " +
-				"\"C7DAC8C2EB37268A	Munich	The Back Room	Editors	2	0	Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:02 Munich.mp3\", " +
-				"\"85DB5416B3AFCF43	Blood	The Back Room	Editors	3	0	Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:03 Blood.mp3\", " +
-				"\"51A294DDA443B02C	Fall	The Back Room	Editors	4	0	Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:04 Fall.mp3\", " +
-				"\"4E55B3775C247A9C	All Sparks	The Back Room	Editors	5	0	Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:05 All Sparks.mp3\", " +
-				"\"54A19A339689D212	Camera	The Back Room	Editors	6	0	Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:06 Camera.mp3\", " +
-				"\"269ECB0AA6E56E02	Fingers in the Factories	The Back Room	Editors	7	0	Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:07 Fingers in the Factories.mp3\"}";
-		
-		List<FileTrackTO> list = new FileTrackTOFactory().createList(input);
-		Assert.assertNotNull(list);
-		Assert.assertEquals(7, list.size());
-		
-		FileTrackTO track = findTrack(list, "85DB5416B3AFCF43");
-		Assert.assertEquals("Blood", track.getName());
-		Assert.assertEquals("The Back Room", track.getAlbum());
-		Assert.assertEquals("Editors", track.getArtist());
-		Assert.assertEquals("3", track.getTrackNumber());
-		Assert.assertEquals("0", track.getDiscNumber());
-		Assert.assertEquals("Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:03 Blood.mp3", track.getLocation());
-	}
+public class FileTrackTOFactoryTest extends BasicSpringTest {
 
-	private FileTrackTO findTrack(List<FileTrackTO> list, String id) {
+    @Autowired
+    private FileTrackTOFactory factory;
+
+    @Test
+    public void test() {
+        List<Object> trackInfoList = new ArrayList<>();
+
+        trackInfoList.add(asList("566EB371EEFB58A8", "566EB371EEFB58A9"));
+        trackInfoList.add(asList("Bessie's Blues", "My One and Only Love"));
+        trackInfoList.add(asList("Akoustic Band1", "Akoustic Band2"));
+        trackInfoList.add(asList("Chick Corea1", "Chick Corea2"));
+        trackInfoList.add(asList(Long.valueOf(1), Long.valueOf(2))); // track number
+        trackInfoList.add(asList(Long.valueOf(3), Long.valueOf(4))); // disc number
+        trackInfoList.add(asList(Long.valueOf(0), Long.valueOf(20))); // ratings
+        trackInfoList.add("Macintosh HD 2:iTunes:iTunes Music:Music:Chick Corea:Akoustic Band:01 Bessie's Blues.mp3" +
+                "|Macintosh HD 2:iTunes:iTunes Music:Music:Chick Corea:Akoustic Band:02 My One and Only Love.mp3");
+
+        List<FileTrackTO> fileTrackTOs = factory.createFromTrackInfos(trackInfoList);
+
+        validate(findTrack(fileTrackTOs, "566EB371EEFB58A8"),
+                new FileTrackTO("566EB371EEFB58A8", "Bessie's Blues", "Akoustic Band1", "Chick Corea1", "1", "3", "0",
+                        "Macintosh HD 2:iTunes:iTunes Music:Music:Chick Corea:Akoustic Band:01 Bessie's Blues.mp3"));
+
+        validate(findTrack(fileTrackTOs, "566EB371EEFB58A9"),
+                new FileTrackTO("566EB371EEFB58A9", "My One and Only Love", "Akoustic Band2", "Chick Corea2", "2", "4", "20",
+                        "Macintosh HD 2:iTunes:iTunes Music:Music:Chick Corea:Akoustic Band:02 My One and Only Love.mp3"));
+    }
+
+    private void validate(FileTrackTO actual, FileTrackTO expected) {
+        ReflectionAssert.assertReflectionEquals(expected, actual);
+    }
+
+    private FileTrackTO findTrack(List<FileTrackTO> list, String id) {
 		for (FileTrackTO track : list) {
 			if (id.equals(track.getPersistentId())) { return track; }
 		}

@@ -8,6 +8,7 @@ public class Track extends Item {
 	private final String artist;
 	private final Integer trackNumber;
 	private final Integer discNumber;
+    private final Integer rating;
 
 
     public Track(TrackBuilder builder) {
@@ -21,6 +22,7 @@ public class Track extends Item {
         this.artist = builder.artist == null ? "" : builder.artist;
         this.trackNumber = builder.trackNumber == null ? 0 : builder.trackNumber;
         this.discNumber = builder.discNumber == null ? 0 : builder.discNumber;
+        this.rating = builder.rating == null ? 0 : builder.rating;
     }
 
     public String getAlbum() {
@@ -39,12 +41,17 @@ public class Track extends Item {
 		return discNumber;
 	}
 
+    public Integer getRating() {
+        return rating;
+    }
+
     @Override
     protected MoreObjects.ToStringHelper getStringHelper() {
         return super.getStringHelper()
                 .add("album", album)
                 .add("artist", artist)
                 .add("trackNumber", trackNumber)
-                .add("discNumber", discNumber);
+                .add("discNumber", discNumber)
+                .add("rating", rating);
     }
 }

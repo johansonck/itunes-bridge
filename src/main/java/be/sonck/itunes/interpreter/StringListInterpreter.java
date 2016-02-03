@@ -1,13 +1,18 @@
 package be.sonck.itunes.interpreter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.Arrays;
 import java.util.List;
 
+@Service
 public class StringListInterpreter implements Interpreter<List<String>> {
 	
 	private static final String SEPARATOR = "\t";
 	
-	private StringInterpreter stringInterpreter = new StringInterpreter();
+    @Autowired
+	private StringInterpreter stringInterpreter;
 	
 
 	@Override

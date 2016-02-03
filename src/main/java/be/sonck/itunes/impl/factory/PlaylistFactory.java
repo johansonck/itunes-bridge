@@ -6,9 +6,11 @@ import be.sonck.itunes.api.model.PlaylistBuilder;
 import be.sonck.itunes.api.model.PlaylistComparator;
 import be.sonck.itunes.impl.model.PlaylistTO;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class PlaylistFactory {
 	
 	private static final String NONE = "none";

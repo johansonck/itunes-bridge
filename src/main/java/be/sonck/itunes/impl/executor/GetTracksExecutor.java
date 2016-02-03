@@ -1,10 +1,13 @@
-package be.sonck.itunes.impl.service;
+package be.sonck.itunes.impl.executor;
 
 import be.sonck.itunes.api.model.FileTrack;
 import be.sonck.itunes.api.model.Playlist;
 import be.sonck.itunes.impl.factory.FileTrackFactory;
 import be.sonck.itunes.impl.factory.FileTrackTOFactory;
 import be.sonck.itunes.impl.model.FileTrackTO;
+import be.sonck.itunes.impl.service.Scripts;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.SortedSet;
@@ -12,11 +15,17 @@ import java.util.SortedSet;
 /**
  * Created by johansonck on 28/12/15.
  */
+@Service
 public class GetTracksExecutor {
 
-    private ClasspathAppleScriptExecutor executor = new ClasspathAppleScriptExecutor();
-    private FileTrackTOFactory fileTrackTOFactory = new FileTrackTOFactory();
-    private FileTrackFactory fileTrackFactory = new FileTrackFactory();
+    @Autowired
+    private ClasspathAppleScriptExecutor executor;
+
+    @Autowired
+    private FileTrackTOFactory fileTrackTOFactory;
+
+    @Autowired
+    private FileTrackFactory fileTrackFactory;
 
 
     public SortedSet<FileTrack> getTracks(Playlist playlist) {

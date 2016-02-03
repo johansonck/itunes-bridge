@@ -1,8 +1,11 @@
 package be.sonck.itunes.impl.service;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Created by johansonck on 27/12/15.
  */
+@Service
 public class AppleScriptParser {
 
     public String parseScript(String script, String... args) {

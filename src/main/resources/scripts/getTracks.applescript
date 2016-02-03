@@ -11,6 +11,7 @@ on run argv
 			set end of allInfo to get artist of file tracks
 			set end of allInfo to get track number of file tracks
 			set end of allInfo to get disc number of file tracks
+			set end of allInfo to get rating of file tracks
 			set end of allInfo to get location of file tracks as text
 		end tell
 		
