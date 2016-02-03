@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -39,6 +40,21 @@ public class FileTrackTOFactory {
         List<String> locations = forcedListInterpreter.interpret(locationsString);
 
         return create(ids, names, albums, artists, trackNumbers, discNumbers, ratings, locations);
+    }
+
+    public FileTrackTO createFromSingleTrackInfo(List<Object> trackInfoList) {
+        Iterator<Object> iterator = trackInfoList.iterator();
+
+        String persistentId = (String) iterator.next();
+        String name = (String) iterator.next();
+        String album = (String) iterator.next();
+        String artist = (String) iterator.next();
+        String trackNumber = toString((Long) iterator.next());
+        String discNumber = toString((Long) iterator.next());
+        String rating = toString((Long) iterator.next());
+        String location = (String) iterator.next();
+
+        return new FileTrackTO(persistentId, name, album, artist, trackNumber, discNumber, rating, location);
     }
 
     private List<FileTrackTO> create(List<String> ids, List<String> names, List<String> albums, List<String> artists,

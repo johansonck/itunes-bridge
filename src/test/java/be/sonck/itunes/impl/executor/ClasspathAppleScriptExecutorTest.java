@@ -1,7 +1,7 @@
 package be.sonck.itunes.impl.executor;
 
 import be.sonck.itunes.BasicSpringTest;
-import be.sonck.itunes.impl.executor.ClasspathAppleScriptExecutor;
+import be.sonck.itunes.impl.service.Scripts;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,7 +22,7 @@ public class ClasspathAppleScriptExecutorTest extends BasicSpringTest {
 
     @Test
     public void test() {
-        List<Object> result = (List<Object>) executor.execute("getTrackInfo.applescript", "When Doves Cry", "Purple Rain", "Prince & The Revolution");
+        List<Object> result = (List<Object>) executor.execute(Scripts.GET_TRACK, "When Doves Cry", "Purple Rain", "Prince & The Revolution");
         Iterator<Object> iterator = result.iterator();
 
         assertTrue(iterator.hasNext());
