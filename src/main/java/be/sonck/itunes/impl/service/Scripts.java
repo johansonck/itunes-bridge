@@ -7,4 +7,5 @@ public class Scripts {
 	public static final String GET_ALL_PLAYLISTS = "getAllPlaylists.applescript";
 	public static final String GET_TRACKS = "getTracks.applescript";
 	public static final String GET_TRACK = "getTrack.applescript";
+	public static final String SET_RATING = "setRating.applescript";
 }
