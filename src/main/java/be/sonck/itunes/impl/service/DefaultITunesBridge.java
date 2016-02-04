@@ -4,9 +4,7 @@ import be.sonck.itunes.api.model.FileTrack;
 import be.sonck.itunes.api.model.Playlist;
 import be.sonck.itunes.api.service.ITunesBridge;
 import be.sonck.itunes.impl.SpringConfig;
-import be.sonck.itunes.impl.executor.GetAllPlaylistsExecutor;
-import be.sonck.itunes.impl.executor.GetTrackExecutor;
-import be.sonck.itunes.impl.executor.GetTracksExecutor;
+import be.sonck.itunes.impl.executor.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -33,6 +31,18 @@ public class DefaultITunesBridge implements ITunesBridge {
         GetTrackExecutor executor = getExecutor(GetTrackExecutor.class);
         return executor.getTrack(name, album, artist);
 	}
+
+    @Override
+    public void setTrackRating(String persistentId, int rating) {
+        SetRatingExecutor executor = getExecutor(SetRatingExecutor.class);
+        executor.setRating(persistentId, rating);
+    }
+
+    @Override
+    public void setAlbumRating(String persistentId, int rating) {
+        SetAlbumRatingExecutor executor = getExecutor(SetAlbumRatingExecutor.class);
+        executor.setRating(persistentId, rating);
+    }
 
     private <T> T getExecutor(Class<T> beanClass) {
         return getApplicationContext().getBean(beanClass);
