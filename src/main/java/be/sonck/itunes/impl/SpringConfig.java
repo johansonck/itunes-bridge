@@ -1,4 +1,4 @@
-package be.sonck.itunes;
+package be.sonck.itunes.impl;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
