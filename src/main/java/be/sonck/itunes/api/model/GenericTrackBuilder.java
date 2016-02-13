@@ -13,6 +13,22 @@ class GenericTrackBuilder<B extends GenericTrackBuilder<B>> extends GenericItemB
     Integer albumRating;
     RatingKind albumRatingKind;
 
+
+    protected GenericTrackBuilder() {
+        super();
+    }
+
+    protected GenericTrackBuilder(Track track) {
+        super(track);
+        album(track.getAlbum());
+        artist(track.getArtist());
+        trackNumber(track.getTrackNumber());
+        discNumber(track.getDiscNumber());
+        rating(track.getRating());
+        albumRating(track.getAlbumRating());
+        albumRatingKind(track.getAlbumRatingKind());
+    }
+
     public B album(String album) {
         this.album = album;
         return (B) this;

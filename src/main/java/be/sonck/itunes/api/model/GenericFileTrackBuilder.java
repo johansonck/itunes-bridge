@@ -9,6 +9,16 @@ public class GenericFileTrackBuilder<B extends GenericFileTrackBuilder<B>> exten
 
     File location;
 
+    protected GenericFileTrackBuilder() {
+        super();
+    }
+
+    protected GenericFileTrackBuilder(FileTrack track) {
+        super(track);
+
+        location(track.getLocation());
+    }
+
     public B location(File location) {
         this.location = location;
         return (B) this;

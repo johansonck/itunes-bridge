@@ -5,6 +5,14 @@ package be.sonck.itunes.api.model;
  */
 public class FileTrackBuilder extends GenericFileTrackBuilder<FileTrackBuilder> {
 
+    public FileTrackBuilder() {
+        super();
+    }
+
+    public FileTrackBuilder(FileTrack track) {
+        super(track);
+    }
+
     public FileTrack build() {
         return new FileTrack(this);
     }

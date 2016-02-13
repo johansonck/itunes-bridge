@@ -5,6 +5,14 @@ package be.sonck.itunes.api.model;
  */
 public class ItemBuilder extends GenericItemBuilder<ItemBuilder> {
 
+    public ItemBuilder() {
+        super();
+    }
+
+    public ItemBuilder(Item item) {
+        super(item);
+    }
+
     public Item build() {
         return new Item(this);
     }

@@ -5,6 +5,14 @@ package be.sonck.itunes.api.model;
  */
 public class TrackBuilder extends GenericTrackBuilder<TrackBuilder> {
 
+    public TrackBuilder() {
+        super();
+    }
+
+    public TrackBuilder(Track track) {
+        super(track);
+    }
+
     public Track build() {
         return new Track(this);
     }
