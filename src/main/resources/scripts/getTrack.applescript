@@ -7,7 +7,7 @@ on run argv
 	tell application "iTunes"
 		set allInfo to {}
 
-		tell (some track whose name is item 1 of argv and album is item 2 of argv and artist is item 3 of argv)
+		tell (some file track whose name is item 1 of argv and album is item 2 of argv and artist is item 3 of argv)
 			set end of allInfo to get persistent ID
 			set end of allInfo to get name
 			set end of allInfo to get album

@@ -23,6 +23,17 @@ public class FileTrack extends Track {
 		return location;
 	}
 
+	public boolean isRated() {
+		Integer rating = getRating();
+		if (rating > 0) return true;
+
+		Integer albumRating = getAlbumRating();
+		if (albumRating == 0) return false;
+
+		RatingKind albumRatingKind = getAlbumRatingKind();
+		return albumRatingKind == RatingKind.USER;
+	}
+
     @Override
     protected MoreObjects.ToStringHelper getStringHelper() {
         return super.getStringHelper().add("location", location);

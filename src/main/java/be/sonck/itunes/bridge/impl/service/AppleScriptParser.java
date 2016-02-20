@@ -14,7 +14,12 @@ public class AppleScriptParser {
         String parsedScript = script;
 
         for (int i = 1; i <= args.length; i++) {
-            parsedScript = parsedScript.replace("item " + i + " of argv", "\"" + args[i - 1] + "\"");
+            String value = args[i - 1];
+
+            String target = "item " + i + " of argv";
+            String replacement = "\"" + value.replace("\"", "\\\"") + "\"";
+
+            parsedScript = parsedScript.replace(target, replacement);
         }
 
         return parsedScript;
