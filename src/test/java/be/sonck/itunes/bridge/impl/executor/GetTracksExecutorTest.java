@@ -4,13 +4,15 @@ import be.sonck.itunes.bridge.BasicSpringTest;
 import be.sonck.itunes.bridge.api.model.FileTrack;
 import be.sonck.itunes.bridge.api.model.Playlist;
 import be.sonck.itunes.bridge.api.model.PlaylistBuilder;
-import org.fest.assertions.Assertions;
-import org.junit.Assert;
+import be.sonck.itunes.bridge.api.model.RatingKind;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.util.SortedSet;
+
+import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by johansonck on 28/12/15.
@@ -22,22 +24,24 @@ public class GetTracksExecutorTest extends BasicSpringTest {
 
     @Test
     public void test() {
-        Playlist playlist = new PlaylistBuilder().persistentId("26D6D2E65A2F19DD").build();
+        Playlist playlist = new PlaylistBuilder().persistentId("130D576BFBCDA288").build();
         SortedSet<FileTrack> tracks = executor.getTracks(playlist);
 
-        Assert.assertNotNull(tracks);
-        Assertions.assertThat(tracks.size()).isGreaterThan(1);
+        assertNotNull(tracks);
+        assertThat(tracks.size()).isGreaterThan(1);
 
         FileTrack track = tracks.iterator().next();
-        Assertions.assertThat(track.getPersistentId()).isEqualTo("566EB371EEFB58A8");
-        Assertions.assertThat(track.getAlbum()).isEqualTo("Akoustic Band");
-        Assertions.assertThat(track.getArtist()).isEqualTo("Chick Corea");
-        Assertions.assertThat(track.getName()).isEqualTo("Bessie's Blues");
-        Assertions.assertThat(track.getDiscNumber()).isEqualTo(Integer.valueOf(0));
-        Assertions.assertThat(track.getTrackNumber()).isEqualTo(Integer.valueOf(1));
+        assertThat(track.getPersistentId()).isEqualTo("566EB371EEFB6EAF");
+        assertThat(track.getAlbum()).isEqualTo("Mother Earth");
+        assertThat(track.getArtist()).isEqualTo("Within Temptation");
+        assertThat(track.getName()).isEqualTo("Mother Earth");
+        assertThat(track.getDiscNumber()).isEqualTo(Integer.valueOf(0));
+        assertThat(track.getTrackNumber()).isEqualTo(Integer.valueOf(1));
+        assertThat(track.getRatingKind()).isEqualTo(RatingKind.USER);
+        assertNotNull(track.getPlayedDate());
 
         File location = track.getLocation();
-        Assertions.assertThat(location).isFile();
-        Assertions.assertThat(location.getAbsolutePath()).endsWith("01 Bessie's Blues.mp3");
+        assertThat(location).isFile();
+        assertThat(location.getAbsolutePath()).endsWith("01 Mother Earth.mp3");
     }
 }

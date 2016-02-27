@@ -27,9 +27,11 @@ public class FileTrackFactory {
                 .trackNumber(toInt(to.getTrackNumber()))
                 .discNumber(toInt(to.getDiscNumber()))
                 .rating(toInt(to.getRating()))
+                .ratingKind(RatingKind.fromValue(to.getRatingKind()))
                 .albumRating(toInt(to.getAlbumRating()))
                 .albumRatingKind(RatingKind.fromValue(to.getAlbumRatingKind()))
                 .location(toFile(to.getLocation()))
+				.playedDate(to.getPlayedDate())
                 .build();
 	}
 	

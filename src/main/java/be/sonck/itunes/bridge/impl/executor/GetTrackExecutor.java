@@ -1,9 +1,9 @@
 package be.sonck.itunes.bridge.impl.executor;
 
 import be.sonck.itunes.bridge.api.model.FileTrack;
+import be.sonck.itunes.bridge.impl.factory.FileTrackFactory;
 import be.sonck.itunes.bridge.impl.factory.FileTrackTOFactory;
 import be.sonck.itunes.bridge.impl.model.FileTrackTO;
-import be.sonck.itunes.bridge.impl.factory.FileTrackFactory;
 import be.sonck.itunes.bridge.impl.service.Scripts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

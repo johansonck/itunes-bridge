@@ -6,62 +6,76 @@ import be.sonck.itunes.bridge.impl.model.FileTrackTO;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.SortedSet;
+import java.util.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class FileTrackFactoryTest {
 
-	@Test
-	public void test() {
-		FileTrackTO to = new FileTrackTO("B411CFB0AB9DC862", "Lights", "The Back Room", "Editors",
-				"1", "0", "80", "60", "user",
-				"Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3");
+    @Test
+    public void test() {
+        Calendar currentTime = GregorianCalendar.getInstance();
 
-		FileTrack fileTrack = new FileTrackFactory().create(to);
+        FileTrackTO to = FileTrackTO.newBuilder()
+                .persistentId("B411CFB0AB9DC862")
+                .name("Lights")
+                .album("The Back Room")
+                .artist("Editors")
+                .trackNumber("1")
+                .discNumber("0")
+                .rating("80")
+                .ratingKind("user")
+                .albumRating("60")
+                .albumRatingKind("user")
+                .location("Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3")
+                .playedDate(currentTime)
+                .build();
 
-		Assert.assertNotNull(fileTrack);
-		Assert.assertEquals("B411CFB0AB9DC862", fileTrack.getPersistentId());
-		Assert.assertEquals("The Back Room", fileTrack.getAlbum());
-		Assert.assertEquals("Editors", fileTrack.getArtist());
-		Assert.assertEquals(Integer.valueOf(0), fileTrack.getDiscNumber());
-		Assert.assertEquals(Integer.valueOf(1), fileTrack.getTrackNumber());
-		Assert.assertEquals(Integer.valueOf(80), fileTrack.getRating());
-		Assert.assertEquals(Integer.valueOf(60), fileTrack.getAlbumRating());
-		Assert.assertEquals(RatingKind.USER, fileTrack.getAlbumRatingKind());
-		Assert.assertEquals("Lights", fileTrack.getName());
-		Assert.assertEquals(
-				"/Volumes/Macintosh HD 2/iTunes/iTunes Music/Music/Editors/The Back Room/01 Lights.mp3",
-				fileTrack.getLocation().getAbsolutePath());
-	}
+        FileTrack fileTrack = new FileTrackFactory().create(to);
 
-	@Test
-	public void testList() {
+        Assert.assertNotNull(fileTrack);
+        assertEquals("B411CFB0AB9DC862", fileTrack.getPersistentId());
+        assertEquals("The Back Room", fileTrack.getAlbum());
+        assertEquals("Editors", fileTrack.getArtist());
+        assertEquals(Integer.valueOf(0), fileTrack.getDiscNumber());
+        assertEquals(Integer.valueOf(1), fileTrack.getTrackNumber());
+        assertEquals(Integer.valueOf(80), fileTrack.getRating());
+        assertEquals(RatingKind.USER, fileTrack.getRatingKind());
+        assertEquals(Integer.valueOf(60), fileTrack.getAlbumRating());
+        assertEquals(RatingKind.USER, fileTrack.getAlbumRatingKind());
+        assertEquals("Lights", fileTrack.getName());
+        assertEquals(
+                "/Volumes/Macintosh HD 2/iTunes/iTunes Music/Music/Editors/The Back Room/01 Lights.mp3",
+                fileTrack.getLocation().getAbsolutePath());
+        assertEquals(currentTime, fileTrack.getPlayedDate());
+    }
 
-		List<FileTrackTO> toList = new ArrayList<FileTrackTO>();
+    @Test
+    public void testList() {
 
-		toList.add(new FileTrackTO("1", "Track 4", "The Back Room", "Editors", "4",
-				"0", "60", "60", "user",
-				"Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3"));
-		toList.add(new FileTrackTO("2", "Track 3", "The Back Room", "Editors", "3",
-				"0", "20", "60", "user",
-				"Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3"));
-		toList.add(new FileTrackTO("3", "Track 2", "The Back Room", "Editors", "2",
-				"0", "40", "60", "user",
-				"Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3"));
-		toList.add(new FileTrackTO("4", "Track 1", "The Back Room", "Editors", "1",
-				"0", "80", "60", "user",
-				"Macintosh HD 2:iTunes:iTunes Music:Music:Editors:The Back Room:01 Lights.mp3"));
+        List<FileTrackTO> toList = new ArrayList<FileTrackTO>();
 
-		SortedSet<FileTrack> fileTracks = new FileTrackFactory().createFileTracks(toList);
+        toList.add(fileTrackTO("4"));
+        toList.add(fileTrackTO("3"));
+        toList.add(fileTrackTO("2"));
+        toList.add(fileTrackTO("1"));
 
-		Assert.assertEquals(4, fileTracks.size());
-		
-		Iterator<FileTrack> iterator = fileTracks.iterator();
-		Assert.assertEquals("4", iterator.next().getPersistentId());
-		Assert.assertEquals("3", iterator.next().getPersistentId());
-		Assert.assertEquals("2", iterator.next().getPersistentId());
-		Assert.assertEquals("1", iterator.next().getPersistentId());
-	}
+        SortedSet<FileTrack> fileTracks = new FileTrackFactory().createFileTracks(toList);
+
+        assertEquals(4, fileTracks.size());
+
+        Iterator<FileTrack> iterator = fileTracks.iterator();
+        assertEquals("1", iterator.next().getPersistentId());
+        assertEquals("2", iterator.next().getPersistentId());
+        assertEquals("3", iterator.next().getPersistentId());
+        assertEquals("4", iterator.next().getPersistentId());
+    }
+
+    private FileTrackTO fileTrackTO(String persistentId) {
+        return FileTrackTO.newBuilder()
+                .persistentId(persistentId)
+                .ratingKind("user")
+                .albumRatingKind("user")
+                .build();
+    }
 }

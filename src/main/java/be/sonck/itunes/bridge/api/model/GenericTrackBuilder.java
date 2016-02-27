@@ -1,5 +1,7 @@
 package be.sonck.itunes.bridge.api.model;
 
+import java.util.Calendar;
+
 /**
  * Created by johansonck on 13/12/15.
  */
@@ -10,8 +12,10 @@ class GenericTrackBuilder<B extends GenericTrackBuilder<B>> extends GenericItemB
     Integer trackNumber;
     Integer discNumber;
     Integer rating;
+    RatingKind ratingKind;
     Integer albumRating;
     RatingKind albumRatingKind;
+    Calendar playedDate;
 
 
     protected GenericTrackBuilder() {
@@ -25,8 +29,10 @@ class GenericTrackBuilder<B extends GenericTrackBuilder<B>> extends GenericItemB
         trackNumber(track.getTrackNumber());
         discNumber(track.getDiscNumber());
         rating(track.getRating());
+        ratingKind(track.getRatingKind());
         albumRating(track.getAlbumRating());
         albumRatingKind(track.getAlbumRatingKind());
+        playedDate(track.getPlayedDate());
     }
 
     public B album(String album) {
@@ -61,6 +67,16 @@ class GenericTrackBuilder<B extends GenericTrackBuilder<B>> extends GenericItemB
 
     public B albumRatingKind(RatingKind albumRatingKind) {
         this.albumRatingKind = albumRatingKind;
+        return (B) this;
+    }
+
+    public B ratingKind(RatingKind ratingKind) {
+        this.ratingKind = ratingKind;
+        return (B) this;
+    }
+
+    public B playedDate(Calendar playedDate) {
+        this.playedDate = playedDate;
         return (B) this;
     }
 }

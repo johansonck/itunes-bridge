@@ -2,6 +2,8 @@ package be.sonck.itunes.bridge.api.model;
 
 import com.google.common.base.MoreObjects;
 
+import java.util.Calendar;
+
 public class Track extends Item {
 
 	private final String album;
@@ -9,8 +11,10 @@ public class Track extends Item {
 	private final Integer trackNumber;
 	private final Integer discNumber;
     private final Integer rating;
+    private final RatingKind ratingKind;
     private final Integer albumRating;
     private final RatingKind albumRatingKind;
+    private final Calendar playedDate;
 
 
     public Track(TrackBuilder builder) {
@@ -25,8 +29,10 @@ public class Track extends Item {
         this.trackNumber = builder.trackNumber == null ? 0 : builder.trackNumber;
         this.discNumber = builder.discNumber == null ? 0 : builder.discNumber;
         this.rating = builder.rating == null ? 0 : builder.rating;
+        this.ratingKind = builder.ratingKind == null ? RatingKind.USER : builder.ratingKind;
         this.albumRating = builder.albumRating == null ? 0 : builder.albumRating;
         this.albumRatingKind = builder.albumRatingKind == null ? RatingKind.USER : builder.albumRatingKind;
+        this.playedDate = builder.playedDate;
     }
 
     public String getAlbum() {
@@ -55,6 +61,25 @@ public class Track extends Item {
 
     public RatingKind getAlbumRatingKind() {
         return albumRatingKind;
+    }
+
+    public RatingKind getRatingKind() {
+        return ratingKind;
+    }
+
+    public Calendar getPlayedDate() {
+        return playedDate;
+    }
+
+    public boolean isRated() { // TODO: write test
+        Integer rating = getRating();
+        if (rating > 0) return true;
+
+        Integer albumRating = getAlbumRating();
+        if (albumRating == 0) return false;
+
+        RatingKind albumRatingKind = getAlbumRatingKind();
+        return albumRatingKind == RatingKind.USER;
     }
 
     @Override

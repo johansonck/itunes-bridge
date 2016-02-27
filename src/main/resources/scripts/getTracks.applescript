@@ -15,6 +15,8 @@ on run argv
 			set end of allInfo to get album rating of file tracks
 			set end of allInfo to get album rating kind of file tracks as text
 			set end of allInfo to get location of file tracks as text
+			set end of allInfo to get rating kind of file tracks as text
+			set end of allInfo to get played date of file tracks
 		end tell
 		
 		return allInfo

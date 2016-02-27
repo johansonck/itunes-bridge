@@ -18,6 +18,8 @@ on run argv
 			set end of allInfo to get album rating
 			set end of allInfo to get album rating kind as text
 			set end of allInfo to get location as text
+			set end of allInfo to get rating kind as text
+			set end of allInfo to get played date
 		end tell
 
 		return allInfo

@@ -9,6 +9,8 @@ public class LocationInterpreter implements Interpreter<File> {
 
 	@Override
 	public File interpret(String string) {
+        if (string == null) return null;
+
 		String path = VOLUMES + string.replace(':', '/');
 		
 		return new File(path);
